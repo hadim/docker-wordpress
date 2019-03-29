@@ -5,7 +5,7 @@ services:
   wp-server:
     build: ../wp-server
     volumes:
-      - ../../backups/${SUBDOMAIN}.${ROOT_HOST}:/backups
+      - "../../backups/$SITE_DIR:/backups"
     environment:
       - MAIN_VIRTUAL_HOST=${MAIN_VIRTUAL_HOST}
       - SITE_URL=${SITE_URL}

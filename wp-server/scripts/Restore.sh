@@ -23,7 +23,7 @@ chown -R nginx:nginx $WORDPRESS_INSTALL_DIR
 # Reset current MySQL database
 echo "** Clear database"
 
-MYSQL_RUN="mysql -h wp-db -u $DB_USER -p$DB_PASSWORD "
+MYSQL_RUN="mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD "
 TABLES=$($MYSQL_RUN $DB_DATABASE -e 'show tables' | awk '{ print $1}' | grep -v '^Tables' )
 for t in $TABLES
 do
@@ -53,7 +53,7 @@ echo "** Setup Wordpress config with DB prefix : $WP_DB_PREFIX"
 wp-cli core config --dbname=$DB_DATABASE \
                    --dbuser=$DB_USER \
                    --dbpass=$DB_PASSWORD \
-                   --dbhost=wp-db \
+                   --dbhost=$DB_HOST \
                    --dbprefix=$WP_DB_PREFIX
 
 echo "* Restoration done for $BACKUP_FILE"

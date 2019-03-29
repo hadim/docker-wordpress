@@ -37,7 +37,7 @@ echo "* Set crontab job for backups"
 (crontab -l 2>/dev/null; echo '30 4 * * * su nginx -c "bash /Backup.sh"') | crontab -
 
 # Wait for database to be ready
-while ! mysqladmin ping -h wp-db --silent; do
+while ! mysqladmin ping -h $DB_HOST --silent; do
     echo "* Waiting for database server to be up."
     sleep 5s;
 done
@@ -57,7 +57,7 @@ if [ $? -ne 0 ]; then
        su nginx -c "wp-cli core download --locale=$WP_LOCALE --version=$WP_VERSION"
 
        su nginx -c "wp-cli core config --dbname=$DB_DATABASE --dbuser=$DB_USER \
-                                       --dbpass=$DB_PASSWORD --dbhost=wp-db \
+                                       --dbpass=$DB_PASSWORD --dbhost=$DB_HOST \
                                        --dbprefix=$WP_DB_PREFIX"
 
        su nginx -c "wp-cli core install --url=$MAIN_VIRTUAL_HOST \

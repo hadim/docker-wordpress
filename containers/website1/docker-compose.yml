@@ -4,15 +4,22 @@ services:
 
   wp-server:
     extends:
-      file: ../common-services.yml
+      file: ../docker-wordpress/containers/common-services.yml
       service: wp-server
-    links:
-      - wp-db:db
+    environment:
+      - WP_LOCALE=${WP_VERSION:-fr_FR}
+      - WP_VERSION=${WP_VERSION:-latest}
 
-  wp-db:
+      - WP_DB_PREFIX="wp_"
+      - WP_TITLE="Wordpress Title"
+      - WP_ADMIN_USER=admin
+      - WP_ADMIN_PASSWORD=password
+      - WP_ADMIN_EMAIL=admin@admin.com
+
+  db:
     extends:
-      file: ../common-services.yml
-      service: wp-db
+      file: ../docker-wordpress/containers/common-services.yml
+      service: db
 
 networks:
   nginx-proxy:

@@ -8,7 +8,7 @@ mkdir -p $BACKUP_PARENT_DIR
 mkdir -p $BACKUP_PARENT_DIR/$BACKUP_DIR
 
 echo "* Dump MySQLdatabase"
-mysqldump -h wp-db -u $DB_USER -p$DB_PASSWORD $DB_DATABASE > $BACKUP_PARENT_DIR/$BACKUP_DIR/db.sql
+mysqldump -h $DB_HOST -u $DB_USER -p$DB_PASSWORD $DB_DATABASE > $BACKUP_PARENT_DIR/$BACKUP_DIR/db.sql
 
 echo "* Copy wordpress files"
 cp -r $WORDPRESS_INSTALL_DIR/ $BACKUP_PARENT_DIR/$BACKUP_DIR/wordpress

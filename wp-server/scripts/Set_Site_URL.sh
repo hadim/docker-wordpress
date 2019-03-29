@@ -16,7 +16,7 @@ WORDPRESS_CONFIG="$WORDPRESS_INSTALL_DIR/wp-config.php"
 WORDPRESS_TABLE_PREFIX=$(cat $WORDPRESS_CONFIG | grep "\$table_prefix" | cut -d \' -f 2)
 echo "** Found table prefix : $WORDPRESS_TABLE_PREFIX"
 
-MYSQL_RUN="mysql -h wp-db -u $DB_USER -p$DB_PASSWORD "
+MYSQL_RUN="mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD "
 
 echo "** Check whether Wordpress is installed in the database"
 if ! $MYSQL_RUN -sN $DB_DATABASE -e "desc ${WORDPRESS_TABLE_PREFIX}options" >> /dev/null 2>&1 ; then

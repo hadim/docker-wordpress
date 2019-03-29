@@ -16,7 +16,7 @@ Instructions for CentOS 7:
 - Setup your environement with `CentOS_7_Docker_Setup.sh`.
 
 ```bash
-wget 
+wget https://raw.githubusercontent.com/hadim/docker-wordpress/master/scripts/CentOS_7_Docker_Setup.sh
 bash "CentOS_7_Docker_Setup.sh"
 ```
 
@@ -39,8 +39,6 @@ mv website1/ websitename/
 cd my-website.local/
 export PROJECT_PATH=$(pwd)
 ```
-
-
 
 - Create directories:
 
@@ -72,7 +70,7 @@ mkdir -p "$PROJECT_PATH/../pydrive"
 - Launch the proxy:
 
 ```bash
-cd $PROJECT_PATH
+cd "$PROJECT_PATH/../docker-wordpress"
 docker-compose pull
 docker network create nginx-proxy
 docker-compose up -d
@@ -83,9 +81,8 @@ docker-compose logs -f
 - Launch one website:
 
 ```bash
-cd "$PROJECT_PATH/containers/yourwebsite.com"
-source ../prod.sh
-source base.sh
+cd "$PROJECT_PATH"
+source ../docker-wordpress/containers/setup.sh example.com
 docker-compose build
 docker-compose up -d
 docker-compose logs -f 

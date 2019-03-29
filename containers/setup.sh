@@ -4,8 +4,8 @@ set -e
 if [ -z "$1" ]; then
     echo "You need to specify the url of the website."
     echo "Usage: setup.sh example.com"
-    return 1
-  fi
+    return 0
+fi
 
 export SITE_DIR=$1
 export ROOT_HOST=$(echo $SITE_DIR | cut -d. -f2)
