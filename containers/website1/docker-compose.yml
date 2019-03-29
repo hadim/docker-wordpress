@@ -1,0 +1,20 @@
+version: "2.4"
+
+services:
+
+  wp-server:
+    extends:
+      file: ../common-services.yml
+      service: wp-server
+    links:
+      - wp-db:db
+
+  wp-db:
+    extends:
+      file: ../common-services.yml
+      service: wp-db
+
+networks:
+  nginx-proxy:
+    external:
+      name: nginx-proxy

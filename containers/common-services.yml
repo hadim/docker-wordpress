@@ -1,0 +1,46 @@
+version: "2.4"
+
+services:
+
+  wp-server:
+    build: ../wp-server
+    volumes:
+      - ../../backups/${SUBDOMAIN}.${ROOT_HOST}:/backups
+    environment:
+      - MAIN_VIRTUAL_HOST=${MAIN_VIRTUAL_HOST}
+      - SITE_URL=${SITE_URL}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+
+      - DB_HOST=db
+      - DB_USER=wordpress
+      - DB_DATABASE=wordpress
+      - DB_PASSWORD=wordpress_password
+
+      - WP_LOCALE=${WP_VERSION:-fr_FR}
+      - WP_VERSION=${WP_VERSION:-latest}
+
+      - WP_DB_PREFIX="wp_"
+      - WP_TITLE="Wordpress Title"
+      - WP_ADMIN_USER=admin
+      - WP_ADMIN_PASSWORD=password
+      - WP_ADMIN_EMAIL=admin@admin.com
+    expose:
+      - "80"
+    networks:
+      - nginx-proxy
+    restart: always
+
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_USER=wordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_PASSWORD=wordpress_password
+    networks:
+      - nginx-proxy
+    restart: always
