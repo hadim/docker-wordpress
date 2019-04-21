@@ -131,10 +131,10 @@ if __name__ == '__main__':
             print(f"Processing {name}")
             try_upload_gdrive(drive, backup_full_name, drive_id)
 
-            # Remove backup older than 10 days locally
-            cmd = f'find {backup_dir} -name "*_wordpress_backup.7z" -mtime +10 -type f -delete'
+            # Remove backup older than 30 days locally
+            cmd = f'find {backup_dir} -name "*_wordpress_backup.7z" -mtime +30 -type f -delete'
             print(f"Running '{cmd}'")
-            subprocess.run(cmd.split(" "))
+            subprocess.run(cmd.split(" "), shell=True, check=True)
 
             # Keep 10 last backup remotely
             remove_old_backup(drive, drive_id, 10)
