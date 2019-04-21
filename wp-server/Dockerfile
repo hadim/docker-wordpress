@@ -25,13 +25,13 @@ RUN sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini && \
 ADD conf/nginx.conf /etc/nginx/
 ADD conf/php-fpm.conf /etc/php7/
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp-cli && chown nginx:nginx /usr/bin/wp-cli
+
 # Copy scripts
 COPY scripts/Set_Site_URL.sh /Set_Site_URL.sh
 COPY scripts/Start.sh /Start.sh
 COPY scripts/Backup.sh /Backup.sh
 COPY scripts/Restore.sh /Restore.sh
-
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp-cli && chown nginx:nginx /usr/bin/wp-cli
 
 VOLUME ["/data"]
 VOLUME ["/backups"]
