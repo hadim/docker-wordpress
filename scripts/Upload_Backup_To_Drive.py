@@ -136,8 +136,8 @@ if __name__ == '__main__':
             print(f"Running '{cmd}'")
             subprocess.run(cmd.split(" "), shell=True, check=True)
 
-            # Keep 10 last backup remotely
-            remove_old_backup(drive, drive_id, 10)
+            # Keep 50 last backup remotely
+            remove_old_backup(drive, drive_id, 50)
 
         else:
             print(f"No backup for {name}")
