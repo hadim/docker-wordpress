@@ -4,6 +4,8 @@ BACKUP_PARENT_DIR="/backups"
 BACKUP_DIR="wordpress_backup"
 BACKUP_NAME=$(date +"%Y_%m_%d_%H_%M_wordpress_backup")
 
+rm -fr $BACKUP_PARENT_DIR/$BACKUP_DIR
+
 mkdir -p $BACKUP_PARENT_DIR
 mkdir -p $BACKUP_PARENT_DIR/$BACKUP_DIR
 
