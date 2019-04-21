@@ -133,6 +133,7 @@ if __name__ == '__main__':
 
             # Remove backup older than 10 days locally
             cmd = f'find {backup_dir} -name "*_wordpress_backup.7z" -mtime +10 -type f -delete'
+            print(f"Running '{cmd}'")
             subprocess.run(cmd.split(" "))
 
             # Keep 10 last backup remotely
