@@ -68,6 +68,10 @@ alias d.rmiuntagged="echo \"docker rmi $(docker images | grep '^<none>' | awk '{
 alias d.rmvolume='docker volume rm $(docker volume ls -qf dangling=true)'
 EOL
 
+cat >> $HOME/.basrc << 'EOL'
+. ~/.bash_profile
+EOL
+
 source $HOME/.bash_profile
 
 # Install Python packages used for Drive backup
