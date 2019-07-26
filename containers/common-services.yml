@@ -14,7 +14,7 @@ services:
       - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
 
-      - DB_HOST=db
+      - DB_HOST=${MAIN_VIRTUAL_HOST}_db
       - DB_USER=wordpress
       - DB_DATABASE=wordpress
       - DB_PASSWORD=wordpress_password
@@ -34,6 +34,7 @@ services:
     restart: always
 
   db:
+    container_name: ${MAIN_VIRTUAL_HOST}_db
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password
     environment:
