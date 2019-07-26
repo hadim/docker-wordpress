@@ -14,8 +14,11 @@ RUN apk update \
 RUN rm -rf /var/cache/apk/*
 
 ENV TERM="xterm"
-ENV PATH /data/bin:$PATH
-ENV WORDPRESS_INSTALL_DIR /data/htdocs
+
+# If you modify $WORDPRESS_INSTALL_DIR
+# you also need to modify paths in conf/nginx.conf
+# and conf/php-fpm.conf.
+ENV WORDPRESS_INSTALL_DIR /var/www/wordpress
 ENV BACKUP_PARENT_DIR /backups
 
 RUN sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini && \
@@ -33,7 +36,6 @@ COPY scripts/Start.sh /Start.sh
 COPY scripts/Backup.sh /Backup.sh
 COPY scripts/Restore.sh /Restore.sh
 
-VOLUME ["/data"]
 VOLUME ["/backups"]
 
 ENTRYPOINT ["bash", "/Start.sh"]
