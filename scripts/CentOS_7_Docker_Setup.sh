@@ -13,7 +13,11 @@ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum erase docker-engine-selinux
 sudo yum -y update
-sudo yum -y install docker-ce git
+sudo yum -y install docker-ce
+
+sudo yum -y remove git*
+sudo yum -y install  https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install  git2u-all
 
 sudo yum -y install firewalld
 sudo systemctl enable firewalld
