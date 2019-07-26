@@ -68,7 +68,7 @@ alias d.rmiuntagged="echo \"docker rmi $(docker images | grep '^<none>' | awk '{
 alias d.rmvolume='docker volume rm $(docker volume ls -qf dangling=true)'
 EOL
 
-cat >> $HOME/.basrc << 'EOL'
+cat >> $HOME/.bashrc << 'EOL'
 . ~/.bash_profile
 EOL
 
