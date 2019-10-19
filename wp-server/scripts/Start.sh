@@ -20,7 +20,7 @@ chmod 777 -R $BACKUP_PARENT_DIR
 # Add cron job to do backup every night at 4:30am
 echo "* Set crontab job for backups"
 crontab -r
-(crontab -l 2>/dev/null; echo '30 4 * * * "./Backup.sh >> /var/log/backup.log 2>&1"') | crontab -
+(crontab -l 2>/dev/null; echo '30 4 * * * bash /Backup.sh >> /var/log/backup.log 2>&1') | crontab -
 
 # Wait for database to be ready
 while ! mysqladmin ping -h $DB_HOST --silent; do

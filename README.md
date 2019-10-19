@@ -50,7 +50,7 @@ mkdir -p "$PROJECT_PATH/../pydrive"
 - Install crontab rule:
 
 ```bash
-(crontab -l 2>/dev/null; echo "30 6 * * * cd $PATH_TO_DOCKER_WORDPRESS && python36 scripts/Upload_Backup_To_Drive.py") | crontab -
+(crontab -l 2>/dev/null; echo "30 6 * * * cd $PATH_TO_DOCKER_WORDPRESS && python3 scripts/Upload_Backup_To_Drive.py") | crontab -
 ```
 
 - Put your `settings.yaml` and  `client_secret.json` files into `$PROJECT_PATH/../pydrive`.
