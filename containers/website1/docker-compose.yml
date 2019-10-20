@@ -22,6 +22,6 @@ services:
       service: db
 
 networks:
-  nginx-proxy:
+  wp_network:
     external:
-      name: nginx-proxy
+      name: wp_network

@@ -1,0 +1,31 @@
+global:
+  checkNewVersion: false
+
+log:
+  filePath: "/var/log/traefik/traefik.log"
+  level: "INFO"
+
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+
+entryPoints:
+  web:
+    address: ':80'
+  websecure:
+    address: ':443'
+
+certificatesResolvers:
+  acmechallenge:
+    acme:
+      email: marelo64@gmail.com
+      storage: /etc/traefik/acme.json
+      tlsChallenge: {}
+      httpChallenge:
+        entryPoint: web
+
+providers:
+  docker:
+    endpoint: 'unix:///var/run/docker.sock'
+    exposedbydefault: false
+    watch: true
+    network: "wp_network"

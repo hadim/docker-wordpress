@@ -27,6 +27,12 @@ bash "CentOS_7_Docker_Setup.sh"
 git clone https://github.com/hadim/docker-wordpress.git
 ```
 
+- Eventually clean your Docker system:
+
+```bash
+docker system prune -a
+```
+
 - Copy the example folder to the parent of `docker-wordpress`:
 
 ```bash
@@ -64,12 +70,12 @@ mkdir -p "$PROJECT_PATH/../pydrive"
 
 ## Usage
 
-- Launch the proxy:
+- Launch the Traefik proxy:
 
 ```bash
 cd "$PROJECT_PATH/../docker-wordpress"
 docker-compose pull
-docker network create nginx-proxy
+docker network create wp_network
 docker-compose up -d
 docker-compose logs -f
 # And check logs are ok.
@@ -79,7 +85,7 @@ docker-compose logs -f
 
 ```bash
 cd "$PROJECT_PATH"
-source ../docker-wordpress/containers/setup.sh my-website.com
+source ../docker-wordpress/setup.sh
 docker-compose build
 docker-compose up -d
 docker-compose logs -f

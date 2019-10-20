@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     # Get the name of the current directory.
     export SITE_DIR=${PWD##*/}
 else
-    SITE_DIR=$1
+    export SITE_DIR=$1
 fi
 
 # Extract the extension of URL.
@@ -15,7 +15,7 @@ export ROOT_HOST=$(echo $SITE_DIR | cut -d. -f2)
 mkdir -p "../backups"
 mkdir -p "../backups/$SITE_DIR"
 
-# Define $SITE_URL
+# Define $WP_HOST_URL
 if [ "$ROOT_HOST" == "local" ];
 then
     echo ".local extension ar enot supported yet."
@@ -32,7 +32,10 @@ then
     exit
 
 else
-    export SITE_URL="${SITE_DIR}"
+    export WP_HOST_URL="${SITE_DIR}"
+    export WP_SITE_URL="https://${WP_HOST_URL}"
 fi
 
-echo "Configuration correctly set for $SITE_URL."
+export WP_HOST_ID=$(echo ${WP_HOST_URL} | tr '.' '_' )
+
+echo "Configuration correctly set for $WP_HOST_URL."
