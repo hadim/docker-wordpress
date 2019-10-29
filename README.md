@@ -1,6 +1,6 @@
 # Docker Image for Wordpress
 
-This instructions works for Centos 7 but any Linux system with Docker installed should work too.
+This instructions works for CentOS 7 but any Linux system with Docker installed should work too.
 
 ## Features
 

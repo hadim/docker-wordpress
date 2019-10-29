@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/with-contenv bash
 
 BACKUP_DIR="wordpress_backup"
 
@@ -6,7 +6,7 @@ BACKUP_FILE=$(find $BACKUP_PARENT_DIR -maxdepth 1 -type f  -name "*wordpress_bac
 
 if [ -z "$BACKUP_FILE" ]; then
     echo "* No backup file found in $BACKUP_PARENT_DIR"
-    exit 1
+    exit 0
 fi
 
 echo "* Init wordpress backup restoration for $BACKUP_FILE"
@@ -18,7 +18,7 @@ cd $BACKUP_PARENT_DIR
 echo "** Copy files to wordpress installation directory"
 rm -fr $WORDPRESS_INSTALL_DIR
 cp -r $BACKUP_DIR/wordpress $WORDPRESS_INSTALL_DIR
-chown -R nginx:nginx $WORDPRESS_INSTALL_DIR
+chown -R abc:abc $WORDPRESS_INSTALL_DIR
 
 # Reset current MySQL database
 echo "** Clear database"

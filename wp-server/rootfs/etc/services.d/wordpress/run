@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/with-contenv bash
+set -e
 
 chmod +x /Backup.sh
 
@@ -9,12 +10,12 @@ fi
 
 # Init nginx
 mkdir -p /tmp/nginx
-chown nginx:nginx /tmp/nginx
-chown -R nginx:nginx $(dirname $WORDPRESS_INSTALL_DIR)
+chown abc:abc /tmp/nginx
+chown -R abc:abc $(dirname $WORDPRESS_INSTALL_DIR)
 mkdir -p /var/log/nginx
 
 # Set permissions to backup dir
-chown -R nginx:nginx $BACKUP_PARENT_DIR
+chown -R abc:abc $BACKUP_PARENT_DIR
 chmod 777 -R $BACKUP_PARENT_DIR
 
 # Add cron job to do backup every night at 4:30am
@@ -31,32 +32,30 @@ done
 echo "* Database is now ready."
 
 # Restore eventual backup
-su nginx -c "bash /Restore.sh"
+su abc -c "bash /Restore.sh"
 
 # Init wordpress directory if no backup restored
-if [ $? -ne 0 ]; then
-  if [ -z "$(ls -A $WORDPRESS_INSTALL_DIR)" ]; then
+if [ -z "$(ls -A $WORDPRESS_INSTALL_DIR)" ]; then
 
-    echo "* Install Wordpress in $WORDPRESS_INSTALL_DIR"
+  echo "* Install Wordpress in $WORDPRESS_INSTALL_DIR"
 
-    cd $WORDPRESS_INSTALL_DIR
-    su nginx -c "wp-cli core download --locale=$WP_LOCALE --version=$WP_VERSION"
+  cd $WORDPRESS_INSTALL_DIR
+  su abc -c "wp-cli core download --locale=$WP_LOCALE --version=$WP_VERSION"
 
-    su nginx -c "wp-cli core config --dbname=$DB_DATABASE --dbuser=$DB_USER \
-                                    --dbpass=$DB_PASSWORD --dbhost=$DB_HOST \
-                                    --dbprefix=$WP_DB_PREFIX"
+  su abc -c "wp-cli core config --dbname=$DB_DATABASE --dbuser=$DB_USER \
+                                  --dbpass=$DB_PASSWORD --dbhost=$DB_HOST \
+                                  --dbprefix=$WP_DB_PREFIX"
 
-    su nginx -c "wp-cli core install --url=$MAIN_VIRTUAL_HOST \
-                                    --title=$WP_TITLE \
-                                    --admin_user=$WP_ADMIN_USER \
-                                    --admin_password=$WP_ADMIN_PASSWORD \
-                                    --admin_email=$WP_ADMIN_EMAIL"
+  su abc -c "wp-cli core install --url=$MAIN_VIRTUAL_HOST \
+                                  --title=$WP_TITLE \
+                                  --admin_user=$WP_ADMIN_USER \
+                                  --admin_password=$WP_ADMIN_PASSWORD \
+                                  --admin_email=$WP_ADMIN_EMAIL"
 
-  fi
 fi
 
 # Set site url
-su nginx -c "bash /Set_Site_URL.sh"
+su abc -c "bash /Set_Site_URL.sh"
 
 # Remove wordpress cache
 rm -fr $WORDPRESS_INSTALL_DIR/wp-content/cache/
@@ -83,17 +82,14 @@ fi
 
 # Forward request and error logs to docker log collector.
 echo "* Redirect nginx logs"
-chown -R nginx:nginx /var/log
-su nginx -c "ln -sf /dev/stdout /var/log/nginx_access.log"
-su nginx -c "ln -sf /dev/stderr /var/log/nginx_error.log"
-su nginx -c "ln -sf /dev/stderr /var/log/php-fpm.log"
-su nginx -c "ln -sf /dev/stdout /var/log/backup.log"
+chown -R abc:abc /var/log
+su abc -c "ln -sf /dev/stdout /var/log/nginx_access.log"
+su abc -c "ln -sf /dev/stderr /var/log/nginx_error.log"
+su abc -c "ln -sf /dev/stderr /var/log/php-fpm.log"
+su abc -c "ln -sf /dev/stdout /var/log/backup.log"
 
 echo "* Launch php-fpm7"
 php-fpm7
-
-echo "* Launch crond"
-crond
 
 echo "* Launch nginx"
 nginx

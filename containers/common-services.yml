@@ -7,6 +7,10 @@ services:
     volumes:
       - "../../backups/$WP_HOST_URL:/backups"
     environment:
+      - TIMEZONE="America/Montreal"
+      - PUID=1000
+      - PGID=1000
+
       - SITE_URL=${WP_SITE_URL}
 
       - DB_HOST=${WP_HOST_ID}_db
